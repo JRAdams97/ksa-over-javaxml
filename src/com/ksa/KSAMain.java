@@ -12,7 +12,7 @@ public class KSAMain extends Application {
         MainController controller = new MainController(primaryStage);
 
         primaryStage.setTitle("Keyword Snippet Analyser");
-        primaryStage.setScene(new Scene(controller.getPrimaryView(), 960, 640));
+        primaryStage.setScene(new Scene(controller.getPrimaryView(), 640, 480));
         primaryStage.show();
     }
 

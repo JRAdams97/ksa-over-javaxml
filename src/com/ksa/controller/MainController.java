@@ -1,14 +1,9 @@
 package com.ksa.controller;
 
 import com.ksa.view.MainView;
-import javafx.collections.FXCollections;
-import javafx.collections.ObservableList;
-import javafx.event.Event;
-import javafx.event.EventHandler;
-import javafx.scene.control.Tab;
 import javafx.stage.Stage;
 
-public class MainController implements EventHandler {
+public class MainController {
 
 	private Stage primaryStage;
 	private final MainView primaryView;
@@ -41,12 +36,7 @@ public class MainController implements EventHandler {
 		this.sourceController = new SourceController(primaryStage);
 		this.searchController = new SearchController(primaryStage);
 		this.visualizationController = new VisualizationController(primaryStage);
-		this.primaryView =new MainView(sourceController.getView(), searchController.getView(),
+		this.primaryView = new MainView(sourceController.getView(), searchController.getView(),
 				visualizationController.getView());
-	}
-
-	@Override
-	public void handle(final Event event) {
-		
 	}
 }

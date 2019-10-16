@@ -35,7 +35,7 @@ public class SearchController implements EventHandler {
 
 		if (source.equals(view.getSearchBtn())) {
 			final SourceController sourceController = new SourceController(mainStage);
-			final Scene swapScene = new Scene(sourceController.getView(), 960, 640);
+			final Scene swapScene = new Scene(sourceController.getView(), 640, 480);
 
 			mainStage.setScene(swapScene);
 		}
