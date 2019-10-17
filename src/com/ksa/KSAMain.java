@@ -1,16 +1,18 @@
 package com.ksa;
 
+import com.ksa.controller.MainController;
 import javafx.application.Application;
 import javafx.scene.Scene;
-import javafx.scene.control.ListView;
 import javafx.stage.Stage;
 
 public class KSAMain extends Application {
 
     @Override
     public void start(Stage primaryStage) {
-        primaryStage.setTitle("Hello World");
-        primaryStage.setScene(new Scene(new ListView<>(), 300, 275));
+        MainController controller = new MainController(primaryStage);
+
+        primaryStage.setTitle("Keyword Snippet Analyser");
+        primaryStage.setScene(new Scene(controller.getPrimaryView(), 640, 480));
         primaryStage.show();
     }
 
