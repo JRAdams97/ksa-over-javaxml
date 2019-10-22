@@ -1,10 +1,10 @@
 package com.ksa.controller;
 
+import com.ksa.model.MainModel;
 import com.ksa.model.SearchModel;
 import com.ksa.view.SearchView;
 import javafx.event.Event;
 import javafx.event.EventHandler;
-import javafx.scene.Scene;
 import javafx.stage.Stage;
 
 public class SearchController implements EventHandler {
@@ -34,10 +34,7 @@ public class SearchController implements EventHandler {
 		Object source = event.getSource();
 
 		if (source.equals(view.getSearchBtn())) {
-			final SourceController sourceController = new SourceController(mainStage);
-			final Scene swapScene = new Scene(sourceController.getView(), 640, 480);
-
-			mainStage.setScene(swapScene);
+			view.getSearchResults().setText(MainModel.getDatabaseContent());
 		}
 	}
 }
