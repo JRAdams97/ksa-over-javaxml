@@ -1,4 +1,4 @@
-package com.ksa;
+package com.ksa.main;
 
 import java.util.List;
 

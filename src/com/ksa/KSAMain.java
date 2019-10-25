@@ -1,4 +1,4 @@
-package com.ksa;
+package com.ksa.main;
 
 import com.ksa.controller.MainController;
 import javafx.application.Application;
