@@ -1,14 +1,11 @@
 package com.ksa.controller;
 
-import com.ksa.main.XMLDataLoader;
+import com.ksa.XMLDataLoader;
 import com.ksa.model.MainModel;
 import com.ksa.model.SourceModel;
 import com.ksa.model.entity.Database;
-import com.ksa.model.entity.Director;
 import com.ksa.model.entity.Movie;
-import com.ksa.model.entity.Writer;
 import com.ksa.view.SourceView;
-import com.ksa.model.SourceModel;
 import javafx.event.Event;
 import javafx.event.EventHandler;
 import javafx.stage.FileChooser;
@@ -16,8 +13,6 @@ import javafx.stage.Stage;
 import javafx.stage.Window;
 
 import javax.xml.bind.JAXBException;
-
-
 import java.io.File;
 import java.io.IOException;
 import java.nio.file.Files;
