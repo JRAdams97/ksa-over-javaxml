@@ -4,8 +4,10 @@ import com.ksa.controller.SourceController;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.control.Button;
+import javafx.scene.control.Label;
 import javafx.scene.control.TextArea;
 import javafx.scene.layout.HBox;
+import javafx.scene.layout.Priority;
 import javafx.scene.layout.VBox;
 
 public class SourceView extends VBox {
@@ -32,17 +34,36 @@ public class SourceView extends VBox {
 	public SourceView(final SourceController controller) {
 		this.controller = controller;
 
-		this.browseBtn.setOnAction(controller);
-		this.loadBtn.setOnAction(controller);
-
-		this.buttonBox.getChildren().addAll(browseBtn, loadBtn);
-		this.getChildren().addAll(xmlSource, buttonBox);
-
 		initView();
+
+		setAlignment(Pos.CENTER);
+		setPadding(new Insets(16, 32, 16, 32));
 	}
 
 	private void initView() {
-		setAlignment(Pos.CENTER);
-		setPadding(new Insets(16, 32, 16, 32));
+		browseBtn.setOnAction(controller);
+		loadBtn.setOnAction(controller);
+
+		buttonBox.setMinWidth(getWidth());
+
+		browseBtn.setAlignment(Pos.BASELINE_LEFT);
+		loadBtn.setAlignment(Pos.BASELINE_RIGHT);
+
+		buttonBox.getChildren().addAll(browseBtn, loadBtn);
+
+		Label xmlSourceLbl = new Label("To begin, please browse and locate a valid XML file. You "
+				+ "can then press the Load button to display the contents of the file in the text "
+				+ "area.");
+
+
+
+		xmlSourceLbl.setPadding(new Insets(16, 8, 16, 8));
+		xmlSourceLbl.setWrapText(true);
+
+		getChildren().addAll(xmlSourceLbl, xmlSource, buttonBox);
+
+		xmlSource.setPrefRowCount(16);
+
+		buttonBox.setPadding(new Insets(16, 8, 16, 8));
 	}
 }
