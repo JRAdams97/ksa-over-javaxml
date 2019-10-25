@@ -17,6 +17,7 @@ public class MainModel {
 
 	public static void setDatabaseContent(String databaseContent) {
 		MainModel.databaseContent = databaseContent;
+	}
 
 	public static Database getDatabaseEntity() {
 		return databaseEntity;
