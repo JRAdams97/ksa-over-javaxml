@@ -1,4 +1,4 @@
-package com.ksa.main;
+package com.ksa;
 
 import com.ksa.model.entity.Database;
 import com.ksa.model.entity.Movie;
