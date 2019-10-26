@@ -8,11 +8,7 @@ import java.util.List;
 public class Database {
 
 	@XmlElement(name = "movie")
-	private List<Movie> movies;
-
-//	public List<Movie> getMovies() {
-//		return movies;
-//	}
+	public List<Movie> movies;
 
 	public void setMovies(List<Movie> movies) {
 		this.movies = movies;

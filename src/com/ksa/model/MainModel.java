@@ -10,6 +10,7 @@ public class MainModel {
 	private static String titleContent;
 	private static String movieContent;
 	private static Hashtable correlatedKeywords;
+	private static Integer totalKeywords;
 	
 	public static String getDatabaseContent() {
 		return databaseContent;
@@ -41,5 +42,13 @@ public class MainModel {
 
 	public static void setCorrelatedKeywords(Hashtable correlatedKeywords) {
 		MainModel.correlatedKeywords = correlatedKeywords;
+	}
+
+	public static Integer getTotalKeywords() {
+		return totalKeywords;
+	}
+
+	public static void setTotalKeywords(Integer totalKeywords) {
+		MainModel.totalKeywords = totalKeywords;
 	}
 }

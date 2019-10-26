@@ -7,13 +7,8 @@ import java.util.List;
 @XmlRootElement(name = "movie")
 public class Movie {
 
-	@XmlElement
 	private String title;
-
-	@XmlElement
 	private Integer year;
-
-	@XmlElement
 	private Double rating;
 
 	@XmlElementWrapper(name = "ds")
@@ -47,7 +42,22 @@ public class Movie {
 	@XmlElementWrapper(name = "kws")
 	@XmlElement(name = "kw")
 	private List<String> keywords;
-	
+
+	@XmlElement(name = "title")
+	public String getTitle() {
+		return title;
+	}
+
+	@XmlElement(name = "year")
+	public Integer getYear() {
+		return year;
+	}
+
+	@XmlElement(name = "rating")
+	public Double getRating() {
+		return rating;
+	}
+
 	public void setTitle(String title) {
 		this.title = title;
 	}
