@@ -165,8 +165,6 @@ public class SourceController implements EventHandler {
 				MainModel.setTitleContent(titlebuilder.toString());
 				MainModel.setDatabaseContent(builder.toString());
 				
-				
-//				view.getXmlSource().setText(MainModel.getTitleContent());
 				view.getXmlSource().setText(MainModel.getDatabaseContent());
 			}
 		}
