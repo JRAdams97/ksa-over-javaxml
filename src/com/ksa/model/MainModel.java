@@ -1,6 +1,8 @@
 package com.ksa.model;
 
 import com.ksa.model.entity.Database;
+
+import java.util.HashMap;
 import java.util.Hashtable;
 
 public class MainModel {
@@ -9,7 +11,7 @@ public class MainModel {
 	private static Database databaseEntity;
 	private static String titleContent;
 	private static String movieContent;
-	private static Hashtable correlatedKeywords;
+	private static HashMap correlatedKeywords;
 	
 	public static String getDatabaseContent() {
 		return databaseContent;
@@ -35,11 +37,11 @@ public class MainModel {
 		MainModel.titleContent = titleContent;
 	}
 	
-	public static Hashtable getCorrelatedKeywords() {
+	public static HashMap getCorrelatedKeywords() {
 		return correlatedKeywords;
 	}
 
-	public static void setCorrelatedKeywords(Hashtable correlatedKeywords) {
+	public static void setCorrelatedKeywords(HashMap correlatedKeywords) {
 		MainModel.correlatedKeywords = correlatedKeywords;
 	}
 }

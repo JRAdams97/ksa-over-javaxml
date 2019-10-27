@@ -6,24 +6,58 @@ import java.io.StringReader;
 import java.text.NumberFormat;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.HashMap;
 import java.util.Hashtable;
 import java.util.List;
 import java.util.Set;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
+import java.util.stream.Stream;
 
 import com.ksa.model.MainModel;
 import com.ksa.model.SearchModel;
+import com.ksa.model.SourceModel;
 import com.ksa.view.SearchView;
+import com.ksa.view.SourceView;
+
 import javafx.event.Event;
 import javafx.event.EventHandler;
 import javafx.stage.Stage;
 
+/**
+ * This controller handles events and user actions that execute on the 'Search'
+ * page of the application. It contains a reference to the application
+ * {@link Stage}. References the MVC pattern by aggregating an associated
+ * {@code view} ({@link SearchView}) and {@code model} ({@link SearchModel})
+ *
+ * @author jradams97
+ * @author tianlu102238612
+ * @version 0.3
+ */
 public class SearchController implements EventHandler {
+	
+	//~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+	//  Fields
+	//~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
+	/**
+	 * Reference to application stage.
+	 */
 	private Stage mainStage;
+	
+	/**
+	 * Associated view. Provided a controller instance on initialization.
+	 */
 	private final SearchView view = new SearchView(this);
+	
+	/**
+	 * Associated model. Provided a controller instance on initialization.
+	 */
 	private final SearchModel model = new SearchModel(this);
+
+	//~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+	//  Accessors and Mutators
+	//~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 	public Stage getMainStage() {
 		return mainStage;
@@ -36,11 +70,28 @@ public class SearchController implements EventHandler {
 	public SearchModel getModel() {
 		return model;
 	}
-
+	
+	/**
+	 * Class constructor. References the main stage of the application
+	 *
+	 * @param mainStage  Global stage used for all application classes.
+	 */
 	public SearchController(final Stage mainStage) {
 		this.mainStage = mainStage;
 	}
-
+	
+	
+	/**
+	 * Overridden implementation of {@link EventHandler#handle(Event)} that
+	 * determines actions to perform when user actions are performed.
+	 * {@code searchField} is handled to prompt for search keyword input
+	 * {@code SearchBtn} is handled to prompt a search for title in database
+	 * based on input keyword. The matched movie data is display it in the
+	 * text area ({@code searchResults}) and stored in a global model
+	 * ({@link MainModel}) for easy access on other scenes.
+	 * @param event  Obtained from the {@link javafx.event.EventDispatcher}.
+	 *               Defines a "notification" when a specific action occurs.
+	 */
 	@Override
 	public void handle(final Event event) {
 		Object source = event.getSource();
@@ -48,7 +99,7 @@ public class SearchController implements EventHandler {
 		if (source.equals(view.getSearchBtn())) {
 			String searchkeyword = view.getSearchField().getText();
 			String database =  MainModel.getDatabaseContent();
-			Hashtable<String,Integer> countTable =  new Hashtable<String,Integer>(); 
+			HashMap<String,Integer> countTable = new HashMap<String,Integer>();
 			
 			// get the number of keywords and all kwscontent from database
 			int kwsNo = 0;
@@ -83,7 +134,7 @@ public class SearchController implements EventHandler {
 			
 			String titleResult = "Search Keyword: "+searchkeyword +"\n";
 			String  movieResult = "Matched Movie: "+searchkeyword +"\n";
-			String  movieKws = "Keywords of matched movie: "+searchkeyword +"\n";
+			String  movieKws = "";
 			
 			for(String title:titles) 
 			{
@@ -126,27 +177,18 @@ public class SearchController implements EventHandler {
 									
 										// store the each keyword and it's occurrences in hashtable
 									    countTable.put(eachKeyword, count);
-									    System.out.println("keyword : "+eachKeyword);
-										System.out.println("count : "+countTable.get(eachKeyword));
 										MainModel.setCorrelatedKeywords(countTable);
-										Hashtable visualTable = MainModel.getCorrelatedKeywords();
 										
 									}								
 
 								}
 										
 							}
-							
-						}
-
-						
-						
-//						MainModel.setKwsContent(kwsinfo);
-						
 						
 					}
 			}
 			
 		}
 	}
+}
 }
