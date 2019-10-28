@@ -16,6 +16,8 @@ import java.util.stream.Stream;
 
 import com.ksa.model.MainModel;
 import com.ksa.model.SearchModel;
+import com.ksa.model.entity.Database;
+import com.ksa.model.entity.Movie;
 import com.ksa.model.SourceModel;
 import com.ksa.view.SearchView;
 import com.ksa.view.SourceView;
@@ -113,28 +115,28 @@ public class SearchController implements EventHandler {
 				kwsNo++;
 				kwsContent += kwsMatcher.group(1)+"\n";
 			}
-					
+
+			MainModel.setTotalKeywords(kwsNo);
 			
 			// get all movie content from database
 			String movieContent = "";
-			String newdatabase = database.replaceAll("\n", "");
+			String newdatabase = database.replaceAll(System.lineSeparator(), "");
 			String regx2 = "<movie>(.*?)</movie>";  
 			Pattern pattern2 = Pattern.compile(regx2);
 			Matcher movieMatcher = pattern2.matcher(newdatabase);		
-			while(movieMatcher.find()) 
+			while(movieMatcher.find())
 			{
-				movieContent += movieMatcher.group(1)+"\n";
+				movieContent += movieMatcher.group(1)+ System.lineSeparator();
 			}
 			String[] movies = movieContent.split(System.getProperty("line.separator"));
-			
-			String movietitle = MainModel.getTitleContent();
-			String[] titles = movietitle.split(System.getProperty("line.separator"));
-			
-			
-			
-			String titleResult = "Search Keyword: "+searchkeyword +"\n";
-			String  movieResult = "Matched Movie: "+searchkeyword +"\n";
-			String  movieKws = "";
+
+			Database movieDatabase = MainModel.getDatabaseEntity();
+			String[] titles = movieDatabase.movies.stream()
+					.map(Movie::getTitle).toArray(String[]::new);
+
+			String titleResult = "Search Keyword: "+searchkeyword + System.lineSeparator();
+			String  movieResult = "Matched Movie: "+searchkeyword + System.lineSeparator();
+			String  movieKws = "Keywords of matched movie: "+searchkeyword + System.lineSeparator();
 			
 			for(String title:titles) 
 			{
@@ -142,7 +144,7 @@ public class SearchController implements EventHandler {
 					{
 					
 						// display matched title in textarea
-						titleResult+= title +"\n";
+						titleResult+= title + System.lineSeparator();
 						view.getSearchResults().setText(titleResult);
 						
 						// search movie by matched title
@@ -150,13 +152,13 @@ public class SearchController implements EventHandler {
 						{
 							if(movie.indexOf(title)!= -1) 
 							{
-								movieResult+=movie+"\n";
+								movieResult+=movie+ System.lineSeparator();
 								
 								//get all keywords of matched movie
 								Matcher movieKwsMatcher = pattern.matcher(movie);
 								while(movieKwsMatcher.find()) 
 								{
-									movieKws += movieKwsMatcher.group(1)+"\n";
+									movieKws += movieKwsMatcher.group(1)+ System.lineSeparator();
 								}
 								
 								String[] movieKeywords = movieKws.split(System.getProperty("line.separator"));
@@ -165,7 +167,7 @@ public class SearchController implements EventHandler {
 								//get each keyword's occurrences in database keywords content
 								for(String movieKeyword:movieKeywords) 
 								{	
-									String[] eachKeywords = movieKeyword.split(System.getProperty("line.separator"));
+									String[] eachKeywords = movieKeyword.split(System.lineSeparator());
 									for(String eachKeyword:eachKeywords ) 
 									{
 										int count = 0;
@@ -177,13 +179,22 @@ public class SearchController implements EventHandler {
 									
 										// store the each keyword and it's occurrences in hashtable
 									    countTable.put(eachKeyword, count);
-										MainModel.setCorrelatedKeywords(countTable);
-										
+									    System.out.println("keyword : "+eachKeyword);
+										System.out.println("count : "+countTable.get(eachKeyword));
 									}								
 
 								}
 										
 							}
+							
+						}
+
+						MainModel.setCorrelatedKeywords(countTable);
+						Hashtable visualTable = MainModel.getCorrelatedKeywords();
+
+//						MainModel.setKwsContent(kwsinfo);
+						
+
 						
 					}
 			}

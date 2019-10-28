@@ -11,6 +11,7 @@ public class MainModel {
 	private static Database databaseEntity;
 	private static String titleContent;
 	private static String movieContent;
+	private static Integer totalKeywords;
 	private static HashMap correlatedKeywords;
 	
 	public static String getDatabaseContent() {
@@ -43,5 +44,13 @@ public class MainModel {
 
 	public static void setCorrelatedKeywords(HashMap correlatedKeywords) {
 		MainModel.correlatedKeywords = correlatedKeywords;
+	}
+
+	public static Integer getTotalKeywords() {
+		return totalKeywords;
+	}
+
+	public static void setTotalKeywords(Integer totalKeywords) {
+		MainModel.totalKeywords = totalKeywords;
 	}
 }

@@ -1,5 +1,8 @@
 package com.ksa.controller;
 
+import java.util.Enumeration;
+import java.util.Hashtable;
+import java.util.Map;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collection;
@@ -16,8 +19,12 @@ import java.util.Map;
 import java.util.Map.Entry;
 import java.util.stream.Stream;
 import java.util.Set;
+import java.util.function.Function;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 import com.ksa.model.MainModel;
+import com.ksa.model.VisualizationModel;
 import com.ksa.model.SourceModel;
 import com.ksa.view.SourceView;
 import com.ksa.view.VisualizationView;
@@ -56,6 +63,9 @@ public class VisualizationController implements EventHandler{
 	 * Associated view. Provided a controller instance on initialization.
 	 */
 	private final VisualizationView view = new VisualizationView(this);
+	private final VisualizationModel model = new VisualizationModel(this);
+
+	private Hashtable<String, Integer> top3Keywords = new Hashtable<>();
 	
 	/**
 	 * initialize a String Array to store top keywords
@@ -82,7 +92,6 @@ public class VisualizationController implements EventHandler{
 	public VisualizationController(Stage primaryStage) {
 		this.stage = primaryStage;
 	}
-	
 	
 	//~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 	//  Methods
@@ -135,10 +144,11 @@ public class VisualizationController implements EventHandler{
 	public void handle(final Event event) {
 		
 		final Object source = event.getSource();
-		HashMap<String, Integer> visualTable = MainModel.getCorrelatedKeywords();
+
+		Hashtable<String, Integer> visualTable = MainModel.getCorrelatedKeywords();
 		HashMap<String, Integer> sortedMap = sortByValue(visualTable);
 		Set<String> keywords = sortedMap.keySet();
-		
+	
 		if(source.equals(view.getTop3Keywords())) 
 		{
 			for(String keyword:keywords) 
@@ -191,9 +201,16 @@ public class VisualizationController implements EventHandler{
 				System.out.println(topKeyword[count]);
 				System.out.println(sortedMap.get(keyword));
 			}
-		}
-		
-		else if(source.equals(view.getBarChartBtn())) 
+		} else if (source.equals(view.getPieChartBtn())) {
+			if (model.isChartVisible()) {
+				view.removeChart();
+			}
+
+			Hashtable pieChartData = prepareData();
+			view.buildPieChart(pieChartData);
+
+			model.setChartVisible(true);
+		} else if(source.equals(view.getBarChartBtn())) 
 		{
 			
 			CategoryAxis xaxis = new CategoryAxis();
@@ -215,4 +232,27 @@ public class VisualizationController implements EventHandler{
 		}	
 	}
 	
+  private Hashtable<String, Double> prepareData() {
+		Integer totalKeywords = MainModel.getTotalKeywords();
+		Hashtable<String, Double> keywordPortionData = new Hashtable<>();
+		Hashtable<String, Integer> correlatedKeywords;
+
+		if (top3Keywords != null) {
+			correlatedKeywords = top3Keywords;
+		} else {
+			correlatedKeywords = MainModel.getCorrelatedKeywords();
+		}
+
+		Enumeration<String> keys = correlatedKeywords.keys();
+		double keywordPortion;
+
+		while (keys.hasMoreElements()) {
+			String key = keys.nextElement();
+			keywordPortion = (double) correlatedKeywords.get(key) / totalKeywords;
+
+			keywordPortionData.put(key, keywordPortion);
+		}
+
+		return keywordPortionData;
+	}
 }

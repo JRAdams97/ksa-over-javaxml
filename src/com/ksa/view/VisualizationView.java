@@ -1,12 +1,19 @@
 package com.ksa.view;
 
 import com.ksa.controller.VisualizationController;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
+import javafx.geometry.Side;
+import javafx.scene.chart.PieChart;
 import javafx.scene.control.Button;
 import javafx.scene.control.RadioButton;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
+
+import java.util.Enumeration;
+import java.util.Hashtable;
 
 public class VisualizationView extends VBox {
 
@@ -22,9 +29,7 @@ public class VisualizationView extends VBox {
 	private final RadioButton top10Keywords = new RadioButton("Top-10 Keywords");
 	private final Button pieChartBtn = new Button("Pie Chart");
 	private final Button barChartBtn = new Button("Bar Chart");
-	
-	
-	
+
 	public VisualizationController getController() {
 		return controller;
 	}
@@ -89,5 +94,29 @@ public class VisualizationView extends VBox {
 	private void initView() {
 		setAlignment(Pos.CENTER);
 		setPadding(new Insets(16, 32, 16, 32));
+	}
+
+	public void buildPieChart(Hashtable<String, Double> data) {
+		ObservableList<PieChart.Data> dataList = FXCollections.observableArrayList();
+		Enumeration<String> keys = data.keys();
+
+		while(keys.hasMoreElements()) {
+			String key = keys.nextElement();
+
+			dataList.add(new PieChart.Data(key, data.get(key)));
+		}
+
+		PieChart chart = new PieChart();
+
+		chart.setData(dataList);
+		chart.setLegendSide(Side.LEFT);
+		chart.setTitle("Keyword Proportions");
+		chart.setClockwise(false);
+
+		getChildren().add(chart);
+	}
+
+	public void removeChart() {
+		getChildren().remove(getChildren().size() - 1);
 	}
 }
