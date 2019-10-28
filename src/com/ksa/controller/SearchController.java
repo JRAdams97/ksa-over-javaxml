@@ -190,16 +190,9 @@ public class SearchController implements EventHandler {
 						}
 
 						MainModel.setCorrelatedKeywords(countTable);
-						Hashtable visualTable = MainModel.getCorrelatedKeywords();
-
-//						MainModel.setKwsContent(kwsinfo);
-						
-
-						
 					}
 			}
 			
 		}
 	}
-}
 }

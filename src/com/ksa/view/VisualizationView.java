@@ -13,7 +13,9 @@ import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 
 import java.util.Enumeration;
+import java.util.HashMap;
 import java.util.Hashtable;
+import java.util.Set;
 
 public class VisualizationView extends VBox {
 
@@ -96,12 +98,12 @@ public class VisualizationView extends VBox {
 		setPadding(new Insets(16, 32, 16, 32));
 	}
 
-	public void buildPieChart(Hashtable<String, Double> data) {
+	public void buildPieChart(HashMap<String, Double> data) {
 		ObservableList<PieChart.Data> dataList = FXCollections.observableArrayList();
-		Enumeration<String> keys = data.keys();
+		Set<String> keys = data.keySet();
 
-		while(keys.hasMoreElements()) {
-			String key = keys.nextElement();
+		while(keys.iterator().hasNext()) {
+			String key = keys.iterator().next();
 
 			dataList.add(new PieChart.Data(key, data.get(key)));
 		}

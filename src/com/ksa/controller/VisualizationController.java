@@ -65,7 +65,7 @@ public class VisualizationController implements EventHandler{
 	private final VisualizationView view = new VisualizationView(this);
 	private final VisualizationModel model = new VisualizationModel(this);
 
-	private Hashtable<String, Integer> top3Keywords = new Hashtable<>();
+	private HashMap<String, Integer> top3Keywords = new HashMap<>();
 	
 	/**
 	 * initialize a String Array to store top keywords
@@ -145,7 +145,7 @@ public class VisualizationController implements EventHandler{
 		
 		final Object source = event.getSource();
 
-		Hashtable<String, Integer> visualTable = MainModel.getCorrelatedKeywords();
+		HashMap<String, Integer> visualTable = MainModel.getCorrelatedKeywords();
 		HashMap<String, Integer> sortedMap = sortByValue(visualTable);
 		Set<String> keywords = sortedMap.keySet();
 	
@@ -206,7 +206,7 @@ public class VisualizationController implements EventHandler{
 				view.removeChart();
 			}
 
-			Hashtable pieChartData = prepareData();
+			HashMap pieChartData = prepareData();
 			view.buildPieChart(pieChartData);
 
 			model.setChartVisible(true);
@@ -232,10 +232,10 @@ public class VisualizationController implements EventHandler{
 		}	
 	}
 	
-  private Hashtable<String, Double> prepareData() {
+  private HashMap<String, Double> prepareData() {
 		Integer totalKeywords = MainModel.getTotalKeywords();
-		Hashtable<String, Double> keywordPortionData = new Hashtable<>();
-		Hashtable<String, Integer> correlatedKeywords;
+		HashMap<String, Double> keywordPortionData = new HashMap<>();
+		HashMap<String, Integer> correlatedKeywords;
 
 		if (top3Keywords != null) {
 			correlatedKeywords = top3Keywords;
@@ -243,11 +243,11 @@ public class VisualizationController implements EventHandler{
 			correlatedKeywords = MainModel.getCorrelatedKeywords();
 		}
 
-		Enumeration<String> keys = correlatedKeywords.keys();
+		Set<String> keys = correlatedKeywords.keySet();
 		double keywordPortion;
 
-		while (keys.hasMoreElements()) {
-			String key = keys.nextElement();
+		while (keys.iterator().hasNext()) {
+			String key = keys.iterator().next();
 			keywordPortion = (double) correlatedKeywords.get(key) / totalKeywords;
 
 			keywordPortionData.put(key, keywordPortion);
