@@ -8,32 +8,44 @@ import javafx.geometry.Pos;
 import javafx.geometry.Side;
 import javafx.scene.chart.PieChart;
 import javafx.scene.control.Button;
+import javafx.scene.control.Label;
 import javafx.scene.control.RadioButton;
+import javafx.scene.control.ToggleGroup;
 import javafx.scene.layout.HBox;
+import javafx.scene.layout.Priority;
+import javafx.scene.layout.Region;
 import javafx.scene.layout.VBox;
 
-import java.util.Enumeration;
 import java.util.HashMap;
-import java.util.Hashtable;
 import java.util.Set;
 
 public class VisualizationView extends VBox {
 
+	private static final String LBL_SELECTION = "Using the radio buttons to the left, choose the "
+			+ "number of top correlated keywords you want to chart. Correlated keywords are "
+			+ "keywords that are related to the movies found in the search results. Once a "
+			+ "selection has been made, you can chart the keywords in either a bar or pie chart.";
 
 	private final VisualizationController controller;
 
 	private final HBox visualizationPanel = new HBox();
+	private final Label selectionPanelLbl = new Label(LBL_SELECTION);
 	private final VBox selectionPanel = new VBox();
 	private final VBox chartPanel = new VBox();
 	private final RadioButton top3Keywords = new RadioButton("Top-3 Keywords");
 	private final RadioButton top5Keywords = new RadioButton("Top-5 Keywords");
 	private final RadioButton top8Keywords = new RadioButton("Top-8 Keywords");
 	private final RadioButton top10Keywords = new RadioButton("Top-10 Keywords");
+	private final ToggleGroup topKeywordsGrp = new ToggleGroup();
 	private final Button pieChartBtn = new Button("Pie Chart");
 	private final Button barChartBtn = new Button("Bar Chart");
 
 	public VisualizationController getController() {
 		return controller;
+	}
+
+	public Label getSelectionPanelLbl() {
+		return selectionPanelLbl;
 	}
 
 	public HBox getVisualizationPanel() {
@@ -71,31 +83,56 @@ public class VisualizationView extends VBox {
 	public Button getBarChartBtn() {
 		return barChartBtn;
 	}
-	
-	
-	
 
 	public VisualizationView(final VisualizationController controller) {
 		this.controller = controller;
-		this.top3Keywords.setOnAction(controller);
-		this.top5Keywords.setOnAction(controller);
-		this.top8Keywords.setOnAction(controller);
-		this.pieChartBtn.setOnAction(controller);
-		this.barChartBtn.setOnAction(controller);
-		
-		
-		this.selectionPanel.getChildren().addAll(
-				top3Keywords, top5Keywords, top8Keywords, top10Keywords);
-		this.chartPanel.getChildren().addAll(pieChartBtn, barChartBtn);
-		this.visualizationPanel.getChildren().addAll(selectionPanel, chartPanel);
-		this.getChildren().addAll(visualizationPanel);
 
 		initView();
+
+		setAlignment(Pos.CENTER);
+		setPadding(new Insets(16, 32, 16, 32));
 	}
 
 	private void initView() {
-		setAlignment(Pos.CENTER);
-		setPadding(new Insets(16, 32, 16, 32));
+		top3Keywords.setOnAction(controller);
+		top5Keywords.setOnAction(controller);
+		top8Keywords.setOnAction(controller);
+		pieChartBtn.setOnAction(controller);
+		barChartBtn.setOnAction(controller);
+
+		selectionPanelLbl.setWrapText(true);
+		selectionPanelLbl.setPadding(new Insets(16, 8, 16, 8));
+
+		top3Keywords.setPadding(new Insets(8, 16, 8, 16));
+		top3Keywords.setToggleGroup(topKeywordsGrp);
+		top3Keywords.setSelected(true);
+
+		top5Keywords.setPadding(new Insets(8, 16, 8, 16));
+		top5Keywords.setToggleGroup(topKeywordsGrp);
+
+		top8Keywords.setPadding(new Insets(8, 16, 8, 16));
+		top8Keywords.setToggleGroup(topKeywordsGrp);
+
+		top10Keywords.setPadding(new Insets(8, 16, 8, 16));
+		top10Keywords.setToggleGroup(topKeywordsGrp);
+
+		selectionPanel.getChildren().addAll(
+				top3Keywords, top5Keywords, top8Keywords, top10Keywords);
+
+		Region padSelRegion = new Region();
+		HBox.setHgrow(padSelRegion, Priority.ALWAYS);
+
+		visualizationPanel.setPadding(new Insets(32, 16, 32, 16));
+
+		chartPanel.setSpacing(6);
+
+		chartPanel.getChildren().addAll(pieChartBtn, barChartBtn);
+		visualizationPanel.getChildren().addAll(selectionPanel, padSelRegion, chartPanel);
+
+		Region padChartRegion = new Region();
+		VBox.setVgrow(padChartRegion, Priority.ALWAYS);
+
+		getChildren().addAll(selectionPanelLbl, visualizationPanel, padChartRegion);
 	}
 
 	public void buildPieChart(HashMap<String, Double> data) {

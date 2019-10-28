@@ -3,7 +3,6 @@ package com.ksa.model;
 import com.ksa.model.entity.Database;
 
 import java.util.HashMap;
-import java.util.Hashtable;
 
 public class MainModel {
 

@@ -118,6 +118,8 @@ public class SourceController implements EventHandler {
 			fileChooser.setTitle("Valid XML File");
 			sourceFile = fileChooser.showOpenDialog(mainStage);
 
+			view.getCurrentFileLbl().setText(sourceFile.getPath());
+
 			Database movieDatabase = new Database();
 			Movie movieTitle = new Movie();
 
