@@ -192,13 +192,16 @@ public class VisualizationController implements EventHandler {
 			model.setChartVisible(true);
 		} else if(source.equals(view.getBarChartBtn())) 
 		{
-			
+			if (model.isChartVisible()) {
+				view.removeChart();
+			}
+
 			CategoryAxis xaxis = new CategoryAxis();
 			NumberAxis yaxis = new NumberAxis(0,10,1);
 			xaxis.setLabel("Keyword");
 			yaxis.setLabel("Frequency");
 			BarChart<String,Double> keywordBar = new BarChart(xaxis,yaxis);
-			keywordBar.setTitle("Keyword Frequency Barchat");
+			keywordBar.setTitle("Keyword Frequency Barchart");
 			
 			for(int i=1;i<count+1;i++) 
 			{
@@ -207,7 +210,7 @@ public class VisualizationController implements EventHandler {
 				keywordBar.getData().add(series);
 				System.out.print(topKeyword[i]);
 			}
-			this.view.getChartPanel().getChildren().add(keywordBar);
+			this.view.getChildren().add(keywordBar);
 			
 		}	
 	}

@@ -17,11 +17,15 @@ import javafx.scene.layout.VBox;
 public class SearchView extends VBox {
 
 	private static final String LBL_SEARCH = "Search: ";
+	private static final String LBL_SEARCHRESULT = "Please enter either the title of a movie, or "
+			+ "any of its associated keywords. When you press the search button, the results of "
+			+ "the search operation will be visible in the text area.";
 
 	private final SearchController controller;
 
 	private final HBox searchPanel = new HBox();
 	private final TextArea searchResults = new TextArea();
+	private final Label searchResultsLbl = new Label(LBL_SEARCHRESULT);
 	private final TextField searchField = new TextField();
 	private final Button searchBtn = new Button("Search");
 	private final Label searchFldLbl = new Label(LBL_SEARCH);
@@ -56,12 +60,16 @@ public class SearchView extends VBox {
 		searchTitle.setOnAction(controller);
 		searchKeyword.setOnAction(controller);
 
+		searchResultsLbl.setWrapText(true);
+		searchResultsLbl.setPadding(new Insets(16, 8, 16, 8));
+
 		searchTitle.setToggleGroup(searchTypeGrp);
 		searchKeyword.setToggleGroup(searchTypeGrp);
 
 		searchTitle.setSelected(true);
-
 		searchTitle.setPadding(new Insets(0, 0, 0, 32));
+
+		searchKeyword.setPadding(new Insets(0, 16, 0, 16));
 
 		Region padRegion = new Region();
 		HBox.setHgrow(padRegion, Priority.ALWAYS);
@@ -72,6 +80,6 @@ public class SearchView extends VBox {
 
 		searchPanel.getChildren().addAll(searchFldLbl, searchField, searchTitle,
 				searchKeyword, padRegion, searchBtn);
-		getChildren().addAll(searchResults, searchPanel);
+		getChildren().addAll(searchResultsLbl, searchResults, searchPanel);
 	}
 }
