@@ -8,12 +8,19 @@ import javafx.scene.control.Label;
 import javafx.scene.control.TextArea;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Priority;
+import javafx.scene.layout.Region;
 import javafx.scene.layout.VBox;
 
 public class SourceView extends VBox {
 
+	private static final String LBL_XMLSOURCE = "To begin, please use the 'Browse' button to "
+			+ "locate a valid XML file. Once the file has been selected, press 'Load' to display "
+			+ "the XML contents of the file in the text area.";
+
 	private final SourceController controller;
 
+	private Label xmlSourceLbl = new Label(LBL_XMLSOURCE);
+	private Label currentFileLbl = new Label();
 	private HBox buttonBox = new HBox();
 	private TextArea xmlSource = new TextArea();
 	private Button browseBtn = new Button("Browse...");
@@ -31,6 +38,14 @@ public class SourceView extends VBox {
 		return loadBtn;
 	}
 
+	public Label getXmlSourceLbl() {
+		return xmlSourceLbl;
+	}
+
+	public Label getCurrentFileLbl() {
+		return currentFileLbl;
+	}
+
 	public SourceView(final SourceController controller) {
 		this.controller = controller;
 
@@ -44,26 +59,22 @@ public class SourceView extends VBox {
 		browseBtn.setOnAction(controller);
 		loadBtn.setOnAction(controller);
 
-		buttonBox.setMinWidth(getWidth());
+		currentFileLbl.setPadding(new Insets(0, 16, 0, 16));
 
-		browseBtn.setAlignment(Pos.BASELINE_LEFT);
-		loadBtn.setAlignment(Pos.BASELINE_RIGHT);
-
-		buttonBox.getChildren().addAll(browseBtn, loadBtn);
-
-		Label xmlSourceLbl = new Label("To begin, please browse and locate a valid XML file. You "
-				+ "can then press the Load button to display the contents of the file in the text "
-				+ "area.");
-
-
-
-		xmlSourceLbl.setPadding(new Insets(16, 8, 16, 8));
-		xmlSourceLbl.setWrapText(true);
-
-		getChildren().addAll(xmlSourceLbl, xmlSource, buttonBox);
-
-		xmlSource.setPrefRowCount(16);
+		Region padRegion = new Region();
+		HBox.setHgrow(padRegion, Priority.ALWAYS);
 
 		buttonBox.setPadding(new Insets(16, 8, 16, 8));
+		buttonBox.getChildren().addAll(browseBtn, currentFileLbl, padRegion, loadBtn);
+
+		HBox.setHgrow(buttonBox, Priority.ALWAYS);
+
+		xmlSource.setPrefRowCount(16);
+		xmlSource.setEditable(false);
+
+		xmlSourceLbl.setWrapText(true);
+		xmlSourceLbl.setPadding(new Insets(16, 8, 16, 8));
+
+		getChildren().addAll(xmlSourceLbl, xmlSource, buttonBox);
 	}
 }

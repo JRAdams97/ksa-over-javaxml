@@ -111,19 +111,19 @@ public class SearchController implements EventHandler {
 			while(kwsMatcher.find()) 
 			{
 				kwsNo++;
-				kwsContent += kwsMatcher.group(1)+"\n";
+				kwsContent += kwsMatcher.group(1)+System.lineSeparator();
 			}
 					
 			
 			// get all movie content from database
 			String movieContent = "";
-			String newdatabase = database.replaceAll("\n", "");
+			String newdatabase = database.replaceAll(System.lineSeparator(), "");
 			String regx2 = "<movie>(.*?)</movie>";  
 			Pattern pattern2 = Pattern.compile(regx2);
 			Matcher movieMatcher = pattern2.matcher(newdatabase);		
 			while(movieMatcher.find()) 
 			{
-				movieContent += movieMatcher.group(1)+"\n";
+				movieContent += movieMatcher.group(1)+System.lineSeparator();
 			}
 			String[] movies = movieContent.split(System.getProperty("line.separator"));
 			
@@ -132,8 +132,8 @@ public class SearchController implements EventHandler {
 			
 			
 			
-			String titleResult = "Search Keyword: "+searchkeyword +"\n";
-			String  movieResult = "Matched Movie: "+searchkeyword +"\n";
+			String titleResult = "Search Keyword: "+searchkeyword +System.lineSeparator();
+			String  movieResult = "Matched Movie: "+searchkeyword +System.lineSeparator();
 			String  movieKws = "";
 			
 			for(String title:titles) 
@@ -142,7 +142,7 @@ public class SearchController implements EventHandler {
 					{
 					
 						// display matched title in textarea
-						titleResult+= title +"\n";
+						titleResult+= title +System.lineSeparator();
 						view.getSearchResults().setText(titleResult);
 						
 						// search movie by matched title
@@ -150,13 +150,13 @@ public class SearchController implements EventHandler {
 						{
 							if(movie.indexOf(title)!= -1) 
 							{
-								movieResult+=movie+"\n";
+								movieResult+=movie+System.lineSeparator();
 								
 								//get all keywords of matched movie
 								Matcher movieKwsMatcher = pattern.matcher(movie);
 								while(movieKwsMatcher.find()) 
 								{
-									movieKws += movieKwsMatcher.group(1)+"\n";
+									movieKws += movieKwsMatcher.group(1)+System.lineSeparator();
 								}
 								
 								String[] movieKeywords = movieKws.split(System.getProperty("line.separator"));

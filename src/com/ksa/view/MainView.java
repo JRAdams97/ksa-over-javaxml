@@ -8,6 +8,8 @@ import javafx.scene.control.TabPane;
 
 public class MainView extends TabPane {
 
+	static final Integer PREF_TXTAREA_ROWS = 16;
+
 	private final ObservableList<? extends Tab> tabList;
 
 	public MainView(Node sourceView, Node searchView, Node visualizationView) {
@@ -17,6 +19,11 @@ public class MainView extends TabPane {
 				new Tab("Visualization", visualizationView));
 
 		getTabs().addAll(tabList);
+
+		initView();
+	}
+
+	private void initView() {
 		setTabClosingPolicy(TabClosingPolicy.UNAVAILABLE);
 		setTabMinWidth(128d);
 	}

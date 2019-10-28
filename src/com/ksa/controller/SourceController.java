@@ -118,13 +118,12 @@ public class SourceController implements EventHandler {
 			fileChooser.setTitle("Valid XML File");
 			sourceFile = fileChooser.showOpenDialog(mainStage);
 
+			view.getCurrentFileLbl().setText(sourceFile.getPath());
+
 			Database movieDatabase = new Database();
-			Movie movieTitle = new Movie();
 
 			try {
 				movieDatabase = dataLoader.parseAsMovie(sourceFile);
-				movieTitle  = dataLoader.parseAsTitle(sourceFile);
-				
 			} catch (JAXBException e) {
 				// TODO: Add logger
 				System.out.println("JAXB error. " + e);
