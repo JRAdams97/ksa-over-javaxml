@@ -1,44 +1,24 @@
 package com.ksa.controller;
 
-import java.util.Enumeration;
-import java.util.Hashtable;
-import java.util.Map;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Collection;
-import java.util.Collections;
-import java.util.Comparator;
-import java.util.HashMap;
-import java.util.HashSet;
-import java.util.Hashtable;
-import java.util.Iterator;
-import java.util.LinkedHashMap;
-import java.util.LinkedList;
-import java.util.List;
-import java.util.Map;
-import java.util.Map.Entry;
-import java.util.stream.Stream;
-import java.util.Set;
-import java.util.function.Function;
-import java.util.stream.Collectors;
-import java.util.stream.Stream;
-
 import com.ksa.model.MainModel;
 import com.ksa.model.VisualizationModel;
-import com.ksa.model.SourceModel;
-import com.ksa.view.SourceView;
 import com.ksa.view.VisualizationView;
-
-import javafx.application.Application;
 import javafx.event.Event;
 import javafx.event.EventHandler;
-import javafx.scene.Group;
-import javafx.scene.Scene;
 import javafx.scene.chart.BarChart;
 import javafx.scene.chart.CategoryAxis;
 import javafx.scene.chart.NumberAxis;
 import javafx.scene.chart.XYChart;
 import javafx.stage.Stage;
+
+import java.util.Collections;
+import java.util.Comparator;
+import java.util.HashMap;
+import java.util.LinkedHashMap;
+import java.util.LinkedList;
+import java.util.List;
+import java.util.Map;
+import java.util.Set;
 
 /**
  * This controller handles events and user actions that execute on the 'Visualization'
@@ -48,8 +28,8 @@ import javafx.stage.Stage;
  * @author tianlu102238612
  * @version 0.3
  */
-public class VisualizationController implements EventHandler{
-	
+public class VisualizationController implements EventHandler {
+
 	//~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 	//  Fields
 	//~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
