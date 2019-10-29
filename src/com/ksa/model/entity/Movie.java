@@ -39,8 +39,6 @@ public class Movie {
 	@XmlElement(name = "p")
 	private List<CastMember> cast;
 
-	@XmlElementWrapper(name = "kws")
-	@XmlElement(name = "kw")
 	private List<String> keywords;
 
 	@XmlElement(name = "title")
@@ -51,6 +49,12 @@ public class Movie {
 	@XmlElement(name = "year")
 	public Integer getYear() {
 		return year;
+	}
+
+	@XmlElementWrapper(name = "kws")
+	@XmlElement(name = "kw")
+	public List<String> getKeywords() {
+		return keywords;
 	}
 
 	@XmlElement(name = "rating")
