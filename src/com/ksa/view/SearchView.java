@@ -29,9 +29,22 @@ public class SearchView extends VBox {
 	private final TextField searchField = new TextField();
 	private final Button searchBtn = new Button("Search");
 	private final Label searchFldLbl = new Label(LBL_SEARCH);
+	private final Label searchTermLbl = new Label();
 	private final RadioButton searchTitle = new RadioButton("Title");
 	private final RadioButton searchKeyword = new RadioButton("Keyword");
 	private final ToggleGroup searchTypeGrp = new ToggleGroup();
+
+	public RadioButton getSearchTitle() {
+		return searchTitle;
+	}
+
+	public RadioButton getSearchKeyword() {
+		return searchKeyword;
+	}
+
+	public Label getSearchTermLbl() {
+		return searchTermLbl;
+	}
 
 	public TextArea getSearchResults() {
 		return searchResults;
@@ -74,12 +87,15 @@ public class SearchView extends VBox {
 		Region padRegion = new Region();
 		HBox.setHgrow(padRegion, Priority.ALWAYS);
 
+		searchTermLbl.setPadding(new Insets(16, 8, 16, 8));
+		searchTermLbl.setStyle("-fx-font-weight: bold");
+
 		searchResults.setPrefRowCount(MainView.PREF_TXTAREA_ROWS);
 		searchFldLbl.setPadding(new Insets(0, 8, 0, 8));
 		searchPanel.setPadding(new Insets(16, 8, 16, 8));
 
 		searchPanel.getChildren().addAll(searchFldLbl, searchField, searchTitle,
 				searchKeyword, padRegion, searchBtn);
-		getChildren().addAll(searchResultsLbl, searchResults, searchPanel);
+		getChildren().addAll(searchResultsLbl, searchTermLbl, searchResults, searchPanel);
 	}
 }

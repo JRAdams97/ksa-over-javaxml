@@ -17,6 +17,7 @@ import javafx.scene.layout.Region;
 import javafx.scene.layout.VBox;
 
 import java.util.HashMap;
+import java.util.Map;
 import java.util.Set;
 
 public class VisualizationView extends VBox {
@@ -97,15 +98,16 @@ public class VisualizationView extends VBox {
 		top3Keywords.setOnAction(controller);
 		top5Keywords.setOnAction(controller);
 		top8Keywords.setOnAction(controller);
+		top10Keywords.setOnAction(controller);
 		pieChartBtn.setOnAction(controller);
 		barChartBtn.setOnAction(controller);
 
 		selectionPanelLbl.setWrapText(true);
+		selectionPanelLbl.setMinHeight(80);
 		selectionPanelLbl.setPadding(new Insets(16, 8, 16, 8));
 
 		top3Keywords.setPadding(new Insets(8, 16, 8, 16));
 		top3Keywords.setToggleGroup(topKeywordsGrp);
-		top3Keywords.setSelected(true);
 
 		top5Keywords.setPadding(new Insets(8, 16, 8, 16));
 		top5Keywords.setToggleGroup(topKeywordsGrp);
@@ -135,14 +137,11 @@ public class VisualizationView extends VBox {
 		getChildren().addAll(selectionPanelLbl, visualizationPanel, padChartRegion);
 	}
 
-	public void buildPieChart(HashMap<String, Double> data) {
+	public void buildPieChart(Integer keywordCount, String[] topKeywords, Map<String, Double> data) {
 		ObservableList<PieChart.Data> dataList = FXCollections.observableArrayList();
-		Set<String> keys = data.keySet();
 
-		while(keys.iterator().hasNext()) {
-			String key = keys.iterator().next();
-
-			dataList.add(new PieChart.Data(key, data.get(key)));
+		for (int i = 0; i < keywordCount; i++) {
+			dataList.add(new PieChart.Data(topKeywords[i], data.get(topKeywords[i])));
 		}
 
 		PieChart chart = new PieChart();
